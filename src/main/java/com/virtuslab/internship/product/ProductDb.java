@@ -1,5 +1,7 @@
 package com.virtuslab.internship.product;
 
+import com.virtuslab.internship.restapi.service.ReceiptService;
+
 import java.math.BigDecimal;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,7 +25,7 @@ public class ProductDb {
                 new Product("Pork", Product.Type.MEAT, new BigDecimal(16)),
                 new Product("Steak", Product.Type.MEAT, new BigDecimal(50)),
                 new Product("Bread", Product.Type.GRAINS, new BigDecimal(5)),
-                new Product("Cereals", Product.Type.GRAINS,new BigDecimal(8))
+                new Product("Cereals", Product.Type.GRAINS, new BigDecimal(8))
         ).collect(Collectors.toSet());
     }
 
@@ -31,6 +33,6 @@ public class ProductDb {
         return products.stream()
                 .filter(product -> productName.equals(product.name()))
                 .findFirst()
-                .get();
+                .orElseThrow(() -> new ReceiptService.WrongArgumentExceptionInBasket("Product not found."));
     }
 }

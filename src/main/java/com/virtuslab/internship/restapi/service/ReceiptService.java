@@ -7,17 +7,19 @@ import com.virtuslab.internship.receipt.Receipt;
 import com.virtuslab.internship.receipt.ReceiptGenerator;
 import com.virtuslab.internship.restapi.controller.BasketInput;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
 @org.springframework.stereotype.Service
-public class Service {
+public class ReceiptService {
     private final ReceiptGenerator receiptGenerator;
     private final ProductDb productDb;
     private final DiscountApplicant discountApplicant;
 
     @Autowired
-    public Service() {
+    public ReceiptService() {
         this.discountApplicant = new DiscountApplicant();
         this.productDb = new ProductDb();
         this.receiptGenerator = new ReceiptGenerator();
@@ -36,5 +38,12 @@ public class Service {
             basket.addProduct(productDb.getProduct(p));
         }
         return basket;
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public static class WrongArgumentExceptionInBasket extends RuntimeException {
+        public WrongArgumentExceptionInBasket(String message) {
+            super(message);
+        }
     }
 }

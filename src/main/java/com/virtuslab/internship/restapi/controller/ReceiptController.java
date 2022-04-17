@@ -2,16 +2,16 @@ package com.virtuslab.internship.restapi.controller;
 
 
 import com.virtuslab.internship.receipt.Receipt;
-import com.virtuslab.internship.restapi.service.Service;
+import com.virtuslab.internship.restapi.service.ReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-class Controller {
-    private final Service receiptGenerator;
+class ReceiptController {
+    private final ReceiptService receiptGenerator;
 
     @Autowired
-    public Controller(Service receiptGenerator) {
+    public ReceiptController(ReceiptService receiptGenerator) {
         this.receiptGenerator = receiptGenerator;
     }
 

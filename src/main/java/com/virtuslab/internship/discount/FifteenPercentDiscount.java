@@ -5,20 +5,23 @@ import com.virtuslab.internship.receipt.Receipt;
 import com.virtuslab.internship.receipt.ReceiptEntry;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-public class FifteenPercentDiscount implements Discount{
+public class FifteenPercentDiscount implements Discount {
 
     private static final String NAME = "FifteenPercentDiscount";
+
     @Override
     public Receipt apply(Receipt receipt) {
         if (shouldApply(receipt)) {
-            var totalPrice = receipt.totalPrice().multiply(BigDecimal.valueOf(0.85));
+            var totalPrice = receipt.totalPrice().multiply(BigDecimal.valueOf(0.85)).setScale(2, RoundingMode.CEILING);
             var discounts = receipt.discounts();
             discounts.add(NAME);
             return new Receipt(receipt.entries(), discounts, totalPrice);
         }
         return receipt;
     }
+
     @Override
     public boolean shouldApply(Receipt receipt) {
         int result = receipt.entries()

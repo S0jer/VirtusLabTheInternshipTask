@@ -3,6 +3,7 @@ package com.virtuslab.internship.discount;
 import com.virtuslab.internship.receipt.Receipt;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class TenPercentDiscount implements Discount {
 
@@ -11,7 +12,7 @@ public class TenPercentDiscount implements Discount {
     @Override
     public Receipt apply(Receipt receipt) {
         if (shouldApply(receipt)) {
-            var totalPrice = receipt.totalPrice().multiply(BigDecimal.valueOf(0.9));
+            var totalPrice = receipt.totalPrice().multiply(BigDecimal.valueOf(0.9)).setScale(2, RoundingMode.CEILING);
             var discounts = receipt.discounts();
             discounts.add(NAME);
             return new Receipt(receipt.entries(), discounts, totalPrice);
